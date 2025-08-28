@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # InzelSec - Port Scanner
 # Description: simple TCP connect() scanner with -T1..-T5 profiles.
-#              Shows only OPEN ports by default (Nmap-like).
 # Usage:
 #   python3 port_scanner.py target.com
 #   python3 port_scanner.py target.com -p 22,80,443
@@ -19,19 +18,16 @@ import os
 import sys
 import time
 
-# Colors
 GREEN  = "\033[0;32m"
 RED    = "\033[0;31m"
 YELLOW = "\033[1;33m"
 NC     = "\033[0m"
 
-# === InzelSec banner (centered) ===
 def banner_inzelsec():
     width = shutil.get_terminal_size((80, 20)).columns
     line = "=" * width
-    print(f"\n{YELLOW}{line}{NC}")
+    print(f"\n{NC}{line}{NC}")
     try:
-        # Prefer figlet to preserve camelCase "InzelSec"
         if shutil.which("figlet"):
             output = os.popen('figlet "InzelSec"').read()
         elif shutil.which("toilet") and os.path.exists(os.path.expanduser("~/.toilet/fonts/big.tlf")):
@@ -45,9 +41,8 @@ def banner_inzelsec():
             print(" " * pad + line_str)
     except Exception:
         print("InzelSec".center(width))
-    print(f"{YELLOW}{line}{NC}\n")
+    print(f"{NC}{line}{NC}\n")
 
-# Parse ports: "22,80,443" or "20-25,80,443"
 def parse_ports(s: str):
     ports = []
     for part in s.split(","):
@@ -62,14 +57,12 @@ def parse_ports(s: str):
             ports.extend(range(a, b + 1))
         else:
             ports.append(int(part))
-    # Deduplicate, validate range, sort
     return sorted(set(p for p in ports if 1 <= p <= 65535))
 
-# === Timing profiles (-T1..-T5) ===
 T_PROFILES = {
     1: {"timeout": 3.0,  "delay": 0.4},
     2: {"timeout": 1.5,  "delay": 0.2},
-    3: {"timeout": 0.50, "delay": 0.0},  # default (Nmap-like mid)
+    3: {"timeout": 0.50, "delay": 0.0}, 
     4: {"timeout": 0.20, "delay": 0.0},
     5: {"timeout": 0.05, "delay": 0.0},
 }
