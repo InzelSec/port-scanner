@@ -5,7 +5,7 @@
 
 # Port Scanner
 
-A Python implementation of a simple **TCP connect() port scanner**.  
+A Python implementation of a simple **port scanner**.  
 (like Nmap)
 
 ---
@@ -46,3 +46,4 @@ python3 port_scanner.py target.com --show-all
 ## Output example:
 
 <img width="890" height="318" alt="Screenshot 2025-08-28 at 10 30 41" src="https://github.com/user-attachments/assets/76fa0c00-2d07-44c9-826f-7e3a51b85a47" />
+
